@@ -11,8 +11,8 @@ ATIVIDADE 3 - Criar uma imagem Docker com build em múltiplos estágios.
 
 ## Comandos utilizados
 
-$ docker build -t satravasso/atividade3-express .
-$ docker run -d -p 8080:3000 satravasso/atividade3-express
+$ docker build -t satravasso/atividade3-express:aula .
+$ docker run -d -p 8080:3000 satravasso/atividade3-express:aula
 
 $ docker push satravasso/atividade3-express
 
