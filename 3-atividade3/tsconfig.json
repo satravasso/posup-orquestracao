@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "outDir": "dist",
+    "esModuleInterop" : true,
+
+    "sourceMap": true,
+    "lib": ["esnext"],
+  },
+  "include": [
+    "src/**/*.ts"
+, "src/services/order_restaurant/order.ts"  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
