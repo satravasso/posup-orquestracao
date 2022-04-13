@@ -1,18 +1,26 @@
-FROM node:16-alpine AS builder
+FROM node:17-alpine3.14 as builder
+ENV NODE_ENV build
+USER node
 WORKDIR /app
-COPY . .
-RUN npm ci
-RUN npm run build
 
-FROM node:16-alpine AS deps
+COPY package*.json ./
+RUN npm install
+
+COPY --chown=node:node . .
+RUN npm run build \
+  && npm prune --production
+
+# ---
+
+FROM node:17-alpine3.14
+
+ENV NODE_ENV production
+
+USER node
 WORKDIR /app
-COPY . .
-RUN npm ci --production --no-audit --no-fund --prefer-offline
 
-FROM astefanutti/scratch-node:16  
-WORKDIR /app
-COPY --from=builder /app/dist ./dist
-COPY --from=deps /app/node_modules ./node_modules
-COPY package.json ./package.json
+COPY --from=builder --chown=node:node /app/package*.json ./
+COPY --from=builder --chown=node:node /app/node_modules/ ./node_modules/
+COPY --from=builder --chown=node:node /app/dist/ ./dist/
 
-ENTRYPOINT ["node", "dist/index.js"]
+CMD ["node", "dist/main.js"]
